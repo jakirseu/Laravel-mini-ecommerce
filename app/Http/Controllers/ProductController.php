@@ -30,10 +30,22 @@ class ProductController extends BaseController
     {
         $data = $request->validate([
             'title' => ['required', 'string'],
-            'price' => ['required', 'numeric']
+            'price' => ['required', 'numeric'],
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validation for image file
         ]);
 
-        $product = Product::create($data);
+             // Handle the image upload if there is an image
+             $imagePath = null;
+             if ($request->hasFile('image')) {
+                 $imagePath = $request->file('image')->store('images/products', 'public'); // Store the image in the public disk
+             }
+
+
+        $product =  Product::create([
+            'title' => $request->input('title'),
+            'price' => $request->input('price'),
+            'image' => $imagePath, // Save the path of the image
+        ]);
 
         return to_route('product.show', $product);
     }
