@@ -44,6 +44,9 @@
                     <div>
                         <span class="font-bold text-gray-700 dark:text-gray-300">Availability:</span>
                         <span class="text-gray-600 dark:text-gray-300">In Stock</span>
+
+                        <h4>Category:</h4>
+                        <p>{{ $product->category ? $product->category->name : 'No Category' }}</p>
                     </div>
 
                     <div>

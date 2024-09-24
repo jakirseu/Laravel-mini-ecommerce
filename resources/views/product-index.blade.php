@@ -20,6 +20,7 @@
                     </a>
 
                     <p class="">Price: ${{ $product->price }}</p>
+                    <p>Category: {{ $product->category ? $product->category->name : 'No Category' }}</p>
 
                     <form action="{{ route('cart.add') }}" method="POST" class="mt-10">
                         @csrf

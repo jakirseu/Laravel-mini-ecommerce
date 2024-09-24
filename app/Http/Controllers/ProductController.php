@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Routing\Controller as BaseController;
+use App\Models\Category;
 
 class ProductController extends BaseController
 {
@@ -23,7 +24,10 @@ class ProductController extends BaseController
 
     public function create()
     {
-        return view('create');
+       // return view('create');
+       $categories = Category::all();
+
+       return view('create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -31,7 +35,8 @@ class ProductController extends BaseController
         $data = $request->validate([
             'title' => ['required', 'string'],
             'price' => ['required', 'numeric'],
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validation for image file
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'category_id' => 'required|exists:categories,id', // new feild for adding category
         ]);
 
              // Handle the image upload if there is an image
@@ -44,7 +49,8 @@ class ProductController extends BaseController
         $product =  Product::create([
             'title' => $request->input('title'),
             'price' => $request->input('price'),
-            'image' => $imagePath, // Save the path of the image
+            'image' => $imagePath,
+            'category_id' => $data['category_id'], // creating product with category
         ]);
 
         return to_route('product.show', $product);

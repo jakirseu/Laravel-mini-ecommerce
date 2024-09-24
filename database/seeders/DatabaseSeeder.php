@@ -7,8 +7,8 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Support\Facades\Hash;
+use Database\Seeders\DefaultCategorySeeder;
 class DatabaseSeeder extends Seeder
-
 {
     /**
      * Seed the application's database.
@@ -17,22 +17,25 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
+        // Call the DefaultCategorySeeder
+        $this->call(DefaultCategorySeeder::class);
+
         User::factory()
-        ->count(2)
-        ->state(new Sequence(
-            [
-                'name' =>  'Admin',
-                'email' => 'admin@mail.com',
-                'password' => Hash::make('password'),
-                'role' => 'admin',
-            ],
-            [
-                'name' =>  'User',
-                'email' => 'user@mail.com',
-                'password' => Hash::make('password'),
-                'role' => 'user',
-            ]
-        ))
-        ->create();
+            ->count(2)
+            ->state(new Sequence(
+                    [
+                        'name' => 'Admin',
+                        'email' => 'admin@mail.com',
+                        'password' => Hash::make('password'),
+                        'role' => 'admin',
+                    ],
+                    [
+                        'name' => 'User',
+                        'email' => 'user@mail.com',
+                        'password' => Hash::make('password'),
+                        'role' => 'user',
+                    ]
+                ))
+            ->create();
     }
 }
