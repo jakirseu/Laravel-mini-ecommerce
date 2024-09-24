@@ -19,3 +19,4 @@ class DefaultCategorySeeder extends Seeder
             'updated_at' => now(),
         ]);
     }
+}
